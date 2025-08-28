@@ -1,0 +1,31 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: servicedeployments-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: k8s.example.com/v1
+    kind: ServiceDeployment
+    name: nginx
+  minReplicas: 1
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 60
+# Optional fine-tuning:
+# behavior:
+#   scaleUp:
+#     policies:
+#     - type: Percent
+#       value: 100
+#       periodSeconds: 60
+#   scaleDown:
+#     stabilizationWindowSeconds: 300  # default ~5m
+#     policies:
+#     - type: Percent
+#       value: 100
+#       periodSeconds: 60

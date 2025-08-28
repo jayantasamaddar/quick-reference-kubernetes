@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: servicedeployments-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: servicedeployments-operator
+  template:
+    metadata:
+      labels:
+        app: servicedeployments-operator
+    spec:
+      serviceAccountName: servicedeployments-operator
+      containers:
+        - name: servicedeployments-operator
+          image: k8s.example.com/servicedeployments-operator:v1.0.0
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "200m"
+          ports:
+            - name: http
+              containerPort: 8080

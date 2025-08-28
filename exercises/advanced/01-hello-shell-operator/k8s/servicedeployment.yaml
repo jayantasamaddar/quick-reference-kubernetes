@@ -1,0 +1,19 @@
+apiVersion: k8s.example.com/v1
+kind: ServiceDeployment
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  replicas: 2
+  containers:
+    - name: nginx
+      image: nginx
+
+  service:
+    name: nginx-svc # Optional. If not provided, defaults to "{ServiceDeployment.metadata.name}-svc"
+    type: ClusterIP # ClusterIP, NodePort or LoadBalancer
+    ports:
+      - port: 80
+        targetPort: 80
+        # nodePort: 30080 # If NodePort or LoadBalancer

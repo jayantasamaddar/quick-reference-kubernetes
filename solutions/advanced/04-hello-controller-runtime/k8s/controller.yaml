@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: servicedeployments-controller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: servicedeployments-controller
+  template:
+    metadata:
+      labels:
+        app: servicedeployments-controller
+    spec:
+      serviceAccountName: servicedeployments-controller
+      containers:
+        - name: servicedeployments-controller
+          image: k8s.example.com/servicedeployments-controller:v1.0.0
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "200m"
+          ports:
+            - name: http
+              containerPort: 8080
